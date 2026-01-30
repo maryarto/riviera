@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
+
+// Обслуживание статических файлов из корня проекта
+app.use(express.static(path.join(__dirname, '..')));
 
 // Конфигурация базы данных
 const dbConfig = {
@@ -31,6 +35,50 @@ const pool = mysql.createPool(dbConfig);
 
 // JWT секрет
 const JWT_SECRET = 'your-secret-key-change-in-production';
+
+// ========== МАРШРУТЫ ДЛЯ HTML СТРАНИЦ ==========
+
+// Главная страница
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
+
+// Каталог товаров
+app.get('/catalog', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'catalog.html'));
+});
+
+// Страница товара
+app.get('/product', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'product.html'));
+});
+
+// Корзина
+app.get('/cart', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'cart.html'));
+});
+
+// Вход
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'login.html'));
+});
+
+// Регистрация
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'register.html'));
+});
+
+// Профиль
+app.get('/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'profile.html'));
+});
+
+// Оформление заказа
+app.get('/checkout', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'checkout.html'));
+});
+
+// ========== API МАРШРУТЫ ==========
 
 // Проверка JWT токена
 const authenticateToken = (req, res, next) => {
@@ -557,7 +605,29 @@ app.post('/api/orders', authenticateToken, async (req, res) => {
     }
 });
 
+// Маршрут для проверки работы сервера
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        message: 'Server is running',
+        timestamp: new Date().toISOString()
+    });
+});
+
+// Обработка 404 для API маршрутов
+app.use('/api/*', (req, res) => {
+    res.status(404).json({ error: 'API endpoint not found' });
+});
+
+// Обработка всех остальных маршрутов - отдаем index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
+
 // Запуск сервера
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    console.log(`Frontend available at: http://localhost:${PORT}`);
+    console.log(`API available at: http://localhost:${PORT}/api/products`);
+    console.log(`Health check: http://localhost:${PORT}/api/health`);
 });
