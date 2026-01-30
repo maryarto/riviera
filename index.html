@@ -1,5 +1,240 @@
-<a>
-    <textarea>
-        banaz
-    </textarea> 
- </a>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière - Премиальная косметика</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-spa"></i>
+                    <span>Lumière</span>
+                </a>
+
+                <!-- Поиск -->
+                <div class="search-container">
+                    <form id="searchForm" action="catalog.html" method="GET">
+                        <input type="text" id="searchInput" placeholder="Поиск товаров...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                        <div class="search-results" id="searchResults"></div>
+                    </form>
+                </div>
+
+                <!-- Навигация -->
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="active"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-store"></i> Каталог</a></li>
+                        <li><a href="catalog.html?category=skincare"><i class="fas fa-heart"></i> Уход</a></li>
+                        <li><a href="catalog.html?category=makeup"><i class="fas fa-palette"></i> Макияж</a></li>
+                        <li><a href="catalog.html?category=natural"><i class="fas fa-leaf"></i> Натуральная</a></li>
+                        <li><a href="#contacts"><i class="fas fa-phone-alt"></i> Контакты</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Иконки пользователя и корзины -->
+                <div class="header-actions">
+                    <div class="user-menu">
+                        <a href="#" id="userIcon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info" id="userInfo">
+                                <p>Вы не авторизованы</p>
+                            </div>
+                            <a href="login.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                            <a href="register.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Регистрация</a>
+                            <a href="profile.html" class="dropdown-item" id="profileLink"><i class="fas fa-user-circle"></i> Профиль</a>
+                            <a href="#" class="dropdown-item" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        </div>
+                    </div>
+                    
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Баннер -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Косметика, которая заботится о вас</h1>
+                <p class="hero-subtitle">Натуральные ингредиенты, экологичная упаковка и профессиональный уход</p>
+                <a href="catalog.html" class="btn btn-primary btn-large">В каталог</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Категории -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Категории товаров</h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Категории будут загружены через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Популярные товары -->
+    <section class="featured-products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Популярные товары</h2>
+                <a href="catalog.html" class="view-all">Смотреть все →</a>
+            </div>
+            <div class="products-grid" id="featuredProducts">
+                <!-- Товары будут загружены через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="benefits">
+        <div class="container">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Натуральный состав</h3>
+                    <p>Без парабенов, сульфатов и искусственных красителей</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Бесплатная доставка</h3>
+                    <p>При заказе от 3000 рублей по всей России</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-undo"></i>
+                    <h3>Возврат товара</h3>
+                    <p>30 дней на возврат неподошедшего товара</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Консультации</h3>
+                    <p>Поможем подобрать уход индивидуально</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer" id="contacts">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <i class="fas fa-spa"></i>
+                        <span>Lumière</span>
+                    </a>
+                    <p>Интернет-магазин натуральной косметики и средств для ухода</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Магазин</h3>
+                    <ul>
+                        <li><a href="catalog.html">Все товары</a></li>
+                        <li><a href="catalog.html?category=skincare">Уход за кожей</a></li>
+                        <li><a href="catalog.html?category=makeup">Макияж</a></li>
+                        <li><a href="catalog.html?category=haircare">Уход за волосами</a></li>
+                        <li><a href="catalog.html?category=fragrance">Парфюмерия</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@lumiere.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Косметическая, 15</li>
+                    </ul>
+                    <div class="newsletter">
+                        <h4>Подписка на новости</h4>
+                        <form id="newsletterForm">
+                            <input type="email" placeholder="Ваш email" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lumière. Все права защищены.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-mir"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно авторизации -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Вход в аккаунт</h2>
+            <form id="quickLoginForm">
+                <div class="form-group">
+                    <label for="quickEmail">Email</label>
+                    <input type="email" id="quickEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="quickPassword">Пароль</label>
+                    <input type="password" id="quickPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <p class="form-link">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/search.js"></script>
+    <script>
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем категории
+            loadCategories();
+            
+            // Загружаем популярные товары
+            loadFeaturedProducts();
+            
+            // Инициализация корзины
+            updateCartCount();
+            
+            // Проверяем авторизацию
+            checkAuthStatus();
+        });
+    </script>
+</body>
+</html>
