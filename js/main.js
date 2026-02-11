@@ -81,12 +81,12 @@ class CosmeticsShop {
             console.error('Error loading categories:', error);
             // Заглушка для демонстрации
             this.categories = [
-                { id: 1, name: 'Уход за лицом', slug: 'skincare', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', description: 'Кремы, сыворотки, тоники' },
-                { id: 2, name: 'Макияж', slug: 'makeup', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', description: 'Помады, тени, тональные средства' },
-                { id: 3, name: 'Парфюмерия', slug: 'fragrance', image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', description: 'Духи, туалетная вода' },
-                { id: 4, name: 'Уход за волосами', slug: 'haircare', image: 'https://images.unsplash.com/photo-1608248242901-3c6b4c6c91e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', description: 'Шампуни, маски, масла' },
-                { id: 5, name: 'Натуральная косметика', slug: 'natural', image: 'https://images.unsplash.com/photo-1591073113125-e46713c829ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', description: 'Органические средства' },
-                { id: 6, name: 'Для тела', slug: 'bodycare', image: 'https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', description: 'Лосьоны, скрабы, масла' }
+                { id: 1, name: 'Уход за лицом', slug: 'skincare', image: '/images/zaLico.png', description: 'Кремы, сыворотки, тоники' },
+                { id: 2, name: 'Макияж', slug: 'makeup', image: '/images/make.jpg', description: 'Помады, тени, тональные средства' },
+                { id: 3, name: 'Парфюмерия', slug: 'fragrance', image: '/images/parfum.jpg', description: 'Духи, туалетная вода' },
+                { id: 4, name: 'Уход за волосами', slug: 'haircare', image: '/images/za_volosami.jpg', description: 'Шампуни, маски, масла' },
+                { id: 5, name: 'Натуральная косметика', slug: 'natural', image: '/images/natuarl.jpg', description: 'Органические средства' },
+                { id: 6, name: 'Для тела', slug: 'bodycare', image: '/images/telo.jpg', description: 'Лосьоны, скрабы, масла' }
             ];
             this.displayCategories();
         }
@@ -122,7 +122,7 @@ class CosmeticsShop {
                     name: 'Увлажняющий крем "Гидрация"',
                     description: 'Интенсивное увлажнение на 24 часа',
                     price: 2499,
-                    image: 'https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    image: '/images/gidra.jpg',
                     category: 'skincare',
                     rating: 4.8,
                     isNew: true
@@ -132,17 +132,17 @@ class CosmeticsShop {
                     name: 'Матовые помады "Velvet"',
                     description: 'Насыщенный матовый цвет, не сушит губы',
                     price: 1299,
-                    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    image: '/images/pomad.jpg',
                     category: 'makeup',
                     rating: 4.9,
                     isPopular: true
                 },
                 {
                     id: 3,
-                    name: 'Туалетная вода "Lumière"',
+                    name: 'Туалетная вода "rivieras"',
                     description: 'Нежный цветочный аромат',
                     price: 5800,
-                    image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    image: '/images/voda.jpeg',
                     category: 'fragrance',
                     rating: 4.7
                 },
@@ -151,7 +151,7 @@ class CosmeticsShop {
                     name: 'Сыворотка с витамином C',
                     description: 'Осветляет тон кожи, придает сияние',
                     price: 3200,
-                    image: 'https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                    image: '/images/vitaminc.jpg',
                     category: 'skincare',
                     rating: 4.6,
                     isNew: true
@@ -356,6 +356,19 @@ class CosmeticsShop {
             }
         }, 3000);
     }
+        updateCartCount() {
+        const cartCount = document.getElementById('cartCount');
+        if (cartCount) {
+        const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+         }
+        }
+        syncCart() {
+         if (window.cartManager) {
+        this.cart = window.cartManager.cart;
+        this.updateCartCount();
+         }
+        }
 }
 
 // Инициализация приложения

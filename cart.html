@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - Lumière</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-spa"></i>
+                    <span>riviera</span>
+                </a>
+
+                <!-- Поиск -->
+                <div class="search-container">
+                    <form id="searchForm" action="catalog.html" method="GET">
+                        <input type="text" id="searchInput" placeholder="Поиск товаров...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                        <div class="search-results" id="searchResults"></div>
+                    </form>
+                </div>
+
+                <!-- Навигация -->
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-store"></i> Каталог</a></li>
+                        <li><a href="catalog.html?category=skincare"><i class="fas fa-heart"></i> Уход</a></li>
+                        <li><a href="catalog.html?category=makeup"><i class="fas fa-palette"></i> Макияж</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Иконки пользователя и корзины -->
+                <div class="header-actions">
+                    <div class="user-menu">
+                        <a href="#" id="userIcon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info" id="userInfo">
+                                <p>Вы не авторизованы</p>
+                            </div>
+                            <a href="login.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                            <a href="register.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Регистрация</a>
+                            <a href="profile.html" class="dropdown-item" id="profileLink"><i class="fas fa-user-circle"></i> Профиль</a>
+                            <a href="#" class="dropdown-item" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        </div>
+                    </div>
+                    
+                    <a href="cart.html" class="cart-icon active">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul class="breadcrumbs-list">
+                <li><a href="index.html">Главная</a></li>
+                <li><span>Корзина</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <section class="cart-section">
+        <div class="container">
+            <h1 class="page-title">Корзина</h1>
+
+            <!-- Пустая корзина -->
+            <div class="empty-cart" id="emptyCart">
+                <div class="empty-cart-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <h2>Ваша корзина пуста</h2>
+                <p>Но это никогда не поздно исправить :)</p>
+                <a href="catalog.html" class="btn btn-primary btn-large">
+                    <i class="fas fa-arrow-left"></i>
+                    Перейти в каталог
+                </a>
+            </div>
+
+            <!-- Корзина с товарами -->
+            <div class="cart-content" id="cartContent">
+                <!-- Заголовок корзины -->
+                <div class="cart-header">
+                    <div class="cart-header-product">Товар</div>
+                    <div class="cart-header-price">Цена</div>
+                    <div class="cart-header-quantity">Количество</div>
+                    <div class="cart-header-total">Сумма</div>
+                    <div class="cart-header-actions"></div>
+                </div>
+
+                <!-- Список товаров -->
+                <div class="cart-items" id="cartItems">
+                    <!-- Товары будут загружены через JavaScript -->
+                </div>
+
+                <!-- Блок скидок и купонов -->
+                <div class="cart-promo">
+                    <div class="promo-code">
+                        <h3>Промокод</h3>
+                        <div class="promo-form">
+                            <input type="text" id="promoCode" placeholder="Введите промокод">
+                            <button class="btn btn-outline" id="applyPromo">Применить</button>
+                        </div>
+                        <div class="promo-message" id="promoMessage"></div>
+                    </div>
+                    <div class="cart-note">
+                        <h3>Примечание к заказу</h3>
+                        <textarea id="orderNote" placeholder="Дополнительная информация к заказу..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Итоги корзины -->
+                <div class="cart-summary">
+                    <div class="summary-header">
+                        <h3>Итого</h3>
+                    </div>
+                    <div class="summary-row">
+                        <span>Товары:</span>
+                        <span id="cartSubtotal">0 ₽</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Скидка:</span>
+                        <span id="cartDiscount">0 ₽</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Доставка:</span>
+                        <span id="cartShipping">0 ₽</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>К оплате:</span>
+                        <span id="cartTotal">0 ₽</span>
+                    </div>
+                    <div class="summary-actions">
+                        <button class="btn btn-outline" id="clearCartBtn">
+                            <i class="fas fa-trash"></i>
+                            Очистить корзину
+                        </button>
+                        <a href="checkout.html" class="btn btn-primary" id="checkoutBtn">
+                            Оформить заказ
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Рекомендуемые товары -->
+                <div class="recommended-products">
+                    <h3>Вам также может понравиться</h3>
+                    <div class="recommended-grid" id="recommendedProducts">
+                        <!-- Рекомендуемые товары будут загружены через JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <i class="fas fa-spa"></i>
+                        <span>Lumière</span>
+                    </a>
+                    <p>Интернет-магазин натуральной косметики и средств для ухода</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Магазин</h3>
+                    <ul>
+                        <li><a href="catalog.html">Все товары</a></li>
+                        <li><a href="catalog.html?category=skincare">Уход за кожей</a></li>
+                        <li><a href="catalog.html?category=makeup">Макияж</a></li>
+                        <li><a href="catalog.html?category=haircare">Уход за волосами</a></li>
+                        <li><a href="catalog.html?category=fragrance">Парфюмерия</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@lumiere.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Косметическая, 15</li>
+                    </ul>
+                    <div class="newsletter">
+                        <h4>Подписка на новости</h4>
+                        <form id="newsletterForm">
+                            <input type="email" placeholder="Ваш email" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lumière. Все права защищены.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-mir"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно подтверждения -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2>Очистить корзину?</h2>
+            <p>Вы уверены, что хотите удалить все товары из корзины?</p>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="cancelClear">Отмена</button>
+                <button class="btn btn-primary" id="confirmClear">Очистить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение скриптов -->
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
