@@ -1,5 +1,31 @@
 // Основной JavaScript файл
 class CosmeticsShop {
+
+addToCart(product, quantity = 1) {
+    const existingItem = this.cart.find(item => item.id === product.id);
+    
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        this.cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            originalPrice: product.originalPrice,
+            image: product.image,
+            brand: product.brand,
+            quantity: quantity
+        });
+    }
+    
+    this.saveCart();
+    this.updateCartCount();
+    
+    // Показываем уведомление
+    this.showNotification('Товар добавлен в корзину!', 'success');
+}
+
+
     constructor() {
         this.cart = JSON.parse(localStorage.getItem('cart')) || [];
         this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;

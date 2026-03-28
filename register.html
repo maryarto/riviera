@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Riviera</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-spa"></i>
+                    <span>Riviera</span>
+                </a>
+
+                <!-- Поиск -->
+                <div class="search-container">
+                    <form id="searchForm" action="catalog.html" method="GET">
+                        <input type="text" id="searchInput" placeholder="Поиск товаров...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                        <div class="search-results" id="searchResults"></div>
+                    </form>
+                </div>
+
+                <!-- Навигация -->
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-store"></i> Каталог</a></li>
+                        <li><a href="catalog.html?category=skincare"><i class="fas fa-heart"></i> Уход</a></li>
+                        <li><a href="catalog.html?category=makeup"><i class="fas fa-palette"></i> Макияж</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Иконки пользователя и корзины -->
+                <div class="header-actions">
+                    <div class="user-menu">
+                        <a href="#" id="userIcon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info" id="userInfo">
+                                <p>Вы не авторизованы</p>
+                            </div>
+                            <a href="login.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                            <a href="register.html" class="dropdown-item active"><i class="fas fa-user-plus"></i> Регистрация</a>
+                            <a href="profile.html" class="dropdown-item" id="profileLink"><i class="fas fa-user-circle"></i> Профиль</a>
+                            <a href="#" class="dropdown-item" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        </div>
+                    </div>
+                    
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul class="breadcrumbs-list">
+                <li><a href="index.html">Главная</a></li>
+                <li><span>Регистрация</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <!-- Карточка регистрации -->
+                <div class="auth-card register-card">
+                    <div class="auth-header">
+                        <h1>Создать аккаунт</h1>
+                        <p>Присоединяйтесь к Lumière и получайте бонусы</p>
+                    </div>
+
+                    <!-- Индикатор прогресса -->
+                    <div class="registration-progress">
+                        <div class="progress-steps">
+                            <div class="progress-step active" data-step="1">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Данные</span>
+                            </div>
+                            <div class="progress-step" data-step="2">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Контакты</span>
+                            </div>
+                            <div class="progress-step" data-step="3">
+                                <span class="step-number">3</span>
+                                <span class="step-label">Подписка</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 33.33%"></div>
+                        </div>
+                    </div>
+
+                    <form id="registerForm" class="auth-form">
+                        <!-- Шаг 1: Основные данные -->
+                        <div class="form-step active" id="step1">
+                            <!-- Имя -->
+                            <div class="form-group">
+                                <label for="name">
+                                    <i class="fas fa-user"></i>
+                                    Имя <span class="required">*</span>
+                                </label>
+                                <input type="text" 
+                                       id="name" 
+                                       name="name" 
+                                       placeholder="Введите ваше имя" 
+                                       required
+                                       autocomplete="given-name">
+                                <div class="field-error" id="nameError"></div>
+                                <div class="field-hint">Минимум 2 символа</div>
+                            </div>
+
+                            <!-- Фамилия (опционально) -->
+                            <div class="form-group">
+                                <label for="surname">
+                                    <i class="fas fa-user"></i>
+                                    Фамилия
+                                </label>
+                                <input type="text" 
+                                       id="surname" 
+                                       name="surname" 
+                                       placeholder="Введите фамилию"
+                                       autocomplete="family-name">
+                                <div class="field-error" id="surnameError"></div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i>
+                                    Email <span class="required">*</span>
+                                </label>
+                                <input type="email" 
+                                       id="email" 
+                                       name="email" 
+                                       placeholder="example@mail.ru" 
+                                       required
+                                       autocomplete="email">
+                                <div class="field-error" id="emailError"></div>
+                            </div>
+
+                            <!-- Пароль -->
+                            <div class="form-group">
+                                <label for="password">
+                                    <i class="fas fa-lock"></i>
+                                    Пароль <span class="required">*</span>
+                                </label>
+                                <div class="password-wrapper">
+                                    <input type="password" 
+                                           id="password" 
+                                           name="password" 
+                                           placeholder="Минимум 6 символов" 
+                                           required
+                                           autocomplete="new-password">
+                                    <button type="button" class="toggle-password" data-target="password">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="password-strength" id="passwordStrength">
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                </div>
+                                <div class="field-error" id="passwordError"></div>
+                                <div class="field-hint" id="passwordHint"></div>
+                            </div>
+
+                            <!-- Подтверждение пароля -->
+                            <div class="form-group">
+                                <label for="confirmPassword">
+                                    <i class="fas fa-lock"></i>
+                                    Подтверждение пароля <span class="required">*</span>
+                                </label>
+                                <div class="password-wrapper">
+                                    <input type="password" 
+                                           id="confirmPassword" 
+                                           name="confirmPassword" 
+                                           placeholder="Повторите пароль" 
+                                           required
+                                           autocomplete="new-password">
+                                    <button type="button" class="toggle-password" data-target="confirmPassword">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="field-error" id="confirmPasswordError"></div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary next-step" data-next="2">
+                                Далее
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Шаг 2: Контактные данные -->
+                        <div class="form-step" id="step2">
+                            <!-- Телефон -->
+                            <div class="form-group">
+                                <label for="phone">
+                                    <i class="fas fa-phone"></i>
+                                    Телефон <span class="required">*</span>
+                                </label>
+                                <input type="tel" 
+                                       id="phone" 
+                                       name="phone" 
+                                       placeholder="+7 (999) 123-45-67" 
+                                       required
+                                       autocomplete="tel">
+                                <div class="field-error" id="phoneError"></div>
+                                <div class="field-hint">Для уведомлений о заказах</div>
+                            </div>
+
+                            <!-- Дата рождения -->
+                            <div class="form-group">
+                                <label for="birthdate">
+                                    <i class="fas fa-calendar"></i>
+                                    Дата рождения
+                                </label>
+                                <input type="date" 
+                                       id="birthdate" 
+                                       name="birthdate"
+                                       max="2010-01-01"
+                                       min="1930-01-01">
+                                <div class="field-error" id="birthdateError"></div>
+                                <div class="field-hint">Для персональных скидок в день рождения</div>
+                            </div>
+
+                            <!-- Пол -->
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-venus-mars"></i>
+                                    Пол
+                                </label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="gender" value="female" checked>
+                                        <span class="radio-custom"></span>
+                                        Женский
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="gender" value="male">
+                                        <span class="radio-custom"></span>
+                                        Мужской
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="gender" value="other">
+                                        <span class="radio-custom"></span>
+                                        Другой
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Город -->
+                            <div class="form-group">
+                                <label for="city">
+                                    <i class="fas fa-city"></i>
+                                    Город
+                                </label>
+                                <select id="city" name="city">
+                                    <option value="">Выберите город</option>
+                                    <option value="moscow">Москва</option>
+                                    <option value="spb">Санкт-Петербург</option>
+                                    <option value="kazan">Казань</option>
+                                    <option value="novosibirsk">Новосибирск</option>
+                                    <option value="ekaterinburg">Екатеринбург</option>
+                                    <option value="other">Другой</option>
+                                </select>
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn btn-outline prev-step" data-prev="1">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Назад
+                                </button>
+                                <button type="button" class="btn btn-primary next-step" data-next="3">
+                                    Далее
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Шаг 3: Подписка и соглашения -->
+                        <div class="form-step" id="step3">
+                            <!-- Подписка на новости -->
+                            <div class="form-group">
+                                <label class="checkbox-label newsletter-checkbox">
+                                    <input type="checkbox" name="newsletter" id="newsletter" checked>
+                                    <span class="checkbox-custom"></span>
+                                    <span>
+                                        <strong>Подписаться на новости</strong>
+                                        <small>Получайте информацию о новинках и скидках</small>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Согласие на обработку данных -->
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="agreeTerms" id="agreeTerms" required>
+                                    <span class="checkbox-custom"></span>
+                                    <span>
+                                        Я согласен с 
+                                        <a href="#" class="terms-link">условиями использования</a> и
+                                        <a href="#" class="privacy-link">политикой конфиденциальности</a>
+                                        <span class="required">*</span>
+                                    </span>
+                                </label>
+                                <div class="field-error" id="termsError"></div>
+                            </div>
+
+                            <!-- Согласие на рекламные материалы -->
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="agreeAds" id="agreeAds">
+                                    <span class="checkbox-custom"></span>
+                                    <span>
+                                        Получать рекламные материалы и специальные предложения
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Капча (для демо) -->
+                            <div class="captcha-container">
+                                <div class="captcha-box">
+                                    <div class="captcha-image">
+                                        <span id="captchaText">5 + 3 = ?</span>
+                                        <button type="button" class="refresh-captcha" id="refreshCaptcha">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" 
+                                           id="captcha" 
+                                           placeholder="Введите ответ" 
+                                           required>
+                                </div>
+                                <div class="field-error" id="captchaError"></div>
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn btn-outline prev-step" data-prev="2">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Назад
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="registerBtn">
+                                    <span class="btn-text">Зарегистрироваться</span>
+                                    <span class="btn-loader" style="display: none;">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Альтернативная регистрация -->
+                    <div class="social-register">
+                        <p class="social-register-title">Или зарегистрируйтесь через</p>
+                        <div class="social-buttons">
+                            <a href="#" class="social-btn google" id="googleRegister">
+                                <i class="fab fa-google"></i>
+                                <span>Google</span>
+                            </a>
+                            <a href="#" class="social-btn vk" id="vkRegister">
+                                <i class="fab fa-vk"></i>
+                                <span>VK</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Ссылка на вход -->
+                    <div class="auth-footer">
+                        <p>
+                            Уже есть аккаунт? 
+                            <a href="login.html" class="login-link">Войти</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Блок с преимуществами регистрации -->
+                <div class="auth-benefits register-benefits">
+                    <h3>Преимущества регистрации:</h3>
+                    
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Приветственный бонус</h4>
+                                <p>500 бонусов на первый заказ</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-percent"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Персональные скидки</h4>
+                                <p>До 20% на любимые бренды</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Бесплатная доставка</h4>
+                                <p>При заказе от 2000₽</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Подарок на день рождения</h4>
+                                <p>Специальное предложение</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>История покупок</h4>
+                                <p>Быстрый повтор заказа</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h4>Список желаний</h4>
+                                <p>Сохраняйте понравившееся</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="benefits-stats">
+                        <div class="stat">
+                            <span class="stat-value">15,000+</span>
+                            <span class="stat-label">довольных клиентов</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">500+</span>
+                            <span class="stat-label">товаров в каталоге</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">24/7</span>
+                            <span class="stat-label">поддержка</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно успешной регистрации -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Регистрация успешна!</h2>
+            <p>Добро пожаловать в семью Riviera!</p>
+            <div class="success-details">
+                <p>На ваш email отправлено письмо с подтверждением</p>
+                <p>Вам начислено <strong>500 бонусов</strong></p>
+            </div>
+            <div class="modal-actions">
+                <a href="catalog.html" class="btn btn-primary">
+                    Перейти в каталог
+                </a>
+                <a href="profile.html" class="btn btn-outline">
+                    В профиль
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <i class="fas fa-spa"></i>
+                        <span>Riviera</span>
+                    </a>
+                    <p>Интернет-магазин натуральной косметики и средств для ухода</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Магазин</h3>
+                    <ul>
+                        <li><a href="catalog.html">Все товары</a></li>
+                        <li><a href="catalog.html?category=skincare">Уход за кожей</a></li>
+                        <li><a href="catalog.html?category=makeup">Макияж</a></li>
+                        <li><a href="catalog.html?category=haircare">Уход за волосами</a></li>
+                        <li><a href="catalog.html?category=fragrance">Парфюмерия</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@Riviera.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Косметическая, 15</li>
+                    </ul>
+                    <div class="newsletter">
+                        <h4>Подписка на новости</h4>
+                        <form id="newsletterForm">
+                            <input type="email" placeholder="Ваш email" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Riviera. Все права защищены.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-mir"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение скриптов -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>

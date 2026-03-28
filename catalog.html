@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров - Riviera</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/catalog.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-spa"></i>
+                    <span>Riviera</span>
+                </a>
+
+                <!-- Поиск -->
+                <div class="search-container">
+                    <form id="searchForm" action="catalog.html" method="GET">
+                        <input type="text" id="searchInput" name="search" placeholder="Поиск товаров..." value="">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                        <div class="search-results" id="searchResults"></div>
+                    </form>
+                </div>
+
+                <!-- Навигация -->
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html" class="active"><i class="fas fa-store"></i> Каталог</a></li>
+                        <li><a href="catalog.html?category=skincare"><i class="fas fa-heart"></i> Уход</a></li>
+                        <li><a href="catalog.html?category=makeup"><i class="fas fa-palette"></i> Макияж</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Иконки пользователя и корзины -->
+                <div class="header-actions">
+                    <div class="user-menu">
+                        <a href="#" id="userIcon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info" id="userInfo">
+                                <p>Вы не авторизованы</p>
+                            </div>
+                            <a href="login.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                            <a href="register.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Регистрация</a>
+                            <a href="profile.html" class="dropdown-item" id="profileLink"><i class="fas fa-user-circle"></i> Профиль</a>
+                            <a href="#" class="dropdown-item" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        </div>
+                    </div>
+                    
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul class="breadcrumbs-list">
+                <li><a href="index.html">Главная</a></li>
+                <li><span id="categoryBreadcrumb">Каталог</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Баннер категории (скрыт по умолчанию) -->
+    <div class="category-banner" id="categoryBanner" style="display: none;">
+        <div class="container">
+            <div class="category-banner-content">
+                <h1 id="categoryTitle">Каталог товаров</h1>
+                <p id="categoryDescription">Широкий выбор косметики для вашей красоты</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <section class="catalog-section">
+        <div class="container">
+            <div class="catalog-layout">
+                <!-- Боковая панель с фильтрами -->
+                <aside class="catalog-sidebar">
+                    <div class="filters-panel">
+                        <div class="filters-header">
+                            <h3>Фильтры</h3>
+                            <button class="reset-filters" id="resetFilters">
+                                <i class="fas fa-redo-alt"></i> Сбросить
+                            </button>
+                        </div>
+
+                        <!-- Фильтр по категориям -->
+                        <div class="filter-section">
+                            <h4 class="filter-title">Категории</h4>
+                            <div class="filter-content" id="categoryFilters">
+                                <!-- Категории будут загружены через JS -->
+                            </div>
+                        </div>
+
+                        <!-- Фильтр по цене -->
+                        <div class="filter-section">
+                            <h4 class="filter-title">Цена</h4>
+                            <div class="filter-content">
+                                <div class="price-range">
+                                    <div class="price-inputs">
+                                        <div class="price-input">
+                                            <label>от</label>
+                                            <input type="number" id="minPrice" placeholder="0" min="0" value="0">
+                                        </div>
+                                        <div class="price-input">
+                                            <label>до</label>
+                                            <input type="number" id="maxPrice" placeholder="10000" min="0" value="10000">
+                                        </div>
+                                    </div>
+                                    <div class="price-slider">
+                                        <input type="range" id="priceRangeMin" class="price-range-min" min="0" max="10000" value="0" step="100">
+                                        <input type="range" id="priceRangeMax" class="price-range-max" min="0" max="10000" value="10000" step="100">
+                                    </div>
+                                    <button class="btn btn-outline btn-sm" id="applyPriceFilter">
+                                        Применить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Фильтр по брендам -->
+                        <div class="filter-section">
+                            <h4 class="filter-title">Бренды</h4>
+                            <div class="filter-content" id="brandFilters">
+                                <div class="filter-search">
+                                    <input type="text" id="brandSearch" placeholder="Поиск бренда...">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="brand-list" id="brandList">
+                                    <!-- Бренды будут загружены через JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Фильтр по наличию -->
+                        <div class="filter-section">
+                            <h4 class="filter-title">Наличие</h4>
+                            <div class="filter-content">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="inStockFilter">
+                                    <span class="checkbox-custom"></span>
+                                    Только в наличии
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Фильтр по скидкам -->
+                        <div class="filter-section">
+                            <h4 class="filter-title">Скидки</h4>
+                            <div class="filter-content">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="discountFilter">
+                                    <span class="checkbox-custom"></span>
+                                    Товары со скидкой
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Фильтр по рейтингу -->
+                        <div class="filter-section">
+                            <h4 class="filter-title">Рейтинг</h4>
+                            <div class="filter-content">
+                                <div class="rating-filter">
+                                    <label class="radio-label">
+                                        <input type="radio" name="rating" value="0" checked>
+                                        <span class="radio-custom"></span>
+                                        Любой
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="rating" value="4">
+                                        <span class="radio-custom"></span>
+                                        от 4 ★ и выше
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="rating" value="3">
+                                        <span class="radio-custom"></span>
+                                        от 3 ★ и выше
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Кнопка применения фильтров (для мобильных) -->
+                        <button class="btn btn-primary apply-filters-mobile" id="applyFiltersMobile">
+                            Применить фильтры
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Основная область с товарами -->
+                <main class="catalog-main">
+                    <!-- Верхняя панель с сортировкой и отображением -->
+                    <div class="catalog-toolbar">
+                        <div class="results-info" id="resultsInfo">
+                            Найдено <span id="resultsCount">0</span> товаров
+                        </div>
+                        
+                        <div class="sort-wrapper">
+                            <label for="sortSelect">Сортировка:</label>
+                            <select id="sortSelect" class="sort-select">
+                                <option value="popular">По популярности</option>
+                                <option value="newest">Сначала новинки</option>
+                                <option value="price-asc">Цена: по возрастанию</option>
+                                <option value="price-desc">Цена: по убыванию</option>
+                                <option value="rating">По рейтингу</option>
+                                <option value="name-asc">По названию А-Я</option>
+                                <option value="name-desc">По названию Я-А</option>
+                            </select>
+                        </div>
+
+                        <div class="view-options">
+                            <button class="view-btn active" data-view="grid" title="Сетка">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button class="view-btn" data-view="list" title="Список">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+
+                        <button class="filter-toggle" id="filterToggle">
+                            <i class="fas fa-sliders-h"></i>
+                            Фильтры
+                        </button>
+                    </div>
+
+                    <!-- Сетка товаров -->
+                    <div class="products-grid" id="productsGrid" data-view="grid">
+                        <!-- Товары будут загружены через JS -->
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Загрузка товаров...</p>
+                        </div>
+                    </div>
+
+                    <!-- Пагинация -->
+                    <div class="pagination" id="pagination">
+                        <!-- Пагинация будет загружена через JS -->
+                    </div>
+
+                    <!-- Сообщение если товары не найдены -->
+                    <div class="no-products" id="noProducts" style="display: none;">
+                        <i class="fas fa-search"></i>
+                        <h3>Товары не найдены</h3>
+                        <p>Попробуйте изменить параметры поиска или сбросить фильтры</p>
+                        <button class="btn btn-primary" id="resetFiltersNoProducts">
+                            Сбросить фильтры
+                        </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Быстрый просмотр товара -->
+    <div class="quick-view-modal" id="quickViewModal">
+        <div class="quick-view-content">
+            <span class="close-quick-view">&times;</span>
+            <div class="quick-view-body" id="quickViewBody">
+                <!-- Контент будет загружен через JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <i class="fas fa-spa"></i>
+                        <span>Lumière</span>
+                    </a>
+                    <p>Интернет-магазин натуральной косметики и средств для ухода</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Магазин</h3>
+                    <ul>
+                        <li><a href="catalog.html">Все товары</a></li>
+                        <li><a href="catalog.html?category=skincare">Уход за кожей</a></li>
+                        <li><a href="catalog.html?category=makeup">Макияж</a></li>
+                        <li><a href="catalog.html?category=haircare">Уход за волосами</a></li>
+                        <li><a href="catalog.html?category=fragrance">Парфюмерия</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@Riviera.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Город н улица н</li>
+                    </ul>
+                    <div class="newsletter">
+                        <h4>Подписка на новости</h4>
+                        <form id="newsletterForm">
+                            <input type="email" placeholder="Ваш email" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Riviera. Все права защищены.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-mir"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение скриптов -->
+    <script src="js/main.js"></script>
+    <script src="js/catalog.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

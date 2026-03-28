@@ -289,7 +289,62 @@ class AuthManager {
     
     deleteCookie(name) {
         document.cookie = name + '=; Max-Age=-99999999; path=/';
+
     }
+
+    /**
+ * Проверка авторизации при загрузке страницы
+ */
+checkAuthRedirect() {
+    // Если пользователь уже авторизован и пытается зайти на страницу входа,
+    // перенаправляем его на главную
+    if (window.location.pathname.includes('login.html') && shop.currentUser) {
+        window.location.href = 'index.html';
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Автоматическое заполнение демо-данных для тестирования
+ */
+fillDemoCredentials() {
+    const demoBtn = document.createElement('button');
+    demoBtn.type = 'button';
+    demoBtn.className = 'btn btn-outline btn-sm demo-btn';
+    demoBtn.innerHTML = '<i class="fas fa-rocket"></i> Тестовый вход';
+    demoBtn.style.marginTop = '10px';
+    
+    demoBtn.addEventListener('click', () => {
+        document.getElementById('loginEmail').value = 'test@test.com';
+        document.getElementById('loginPassword').value = '123456';
+        document.getElementById('rememberMe').checked = true;
+        
+        // Подсветка полей
+        document.getElementById('loginEmail').classList.add('is-valid');
+        document.getElementById('loginPassword').classList.add('is-valid');
+        
+        shop.showNotification('Данные для тестового ввода заполнены', 'success');
+    });
+
+    const form = document.getElementById('loginForm');
+    if (form) {
+        form.appendChild(demoBtn);
+    }
+}
+
+    // Вызов для разработки (можно закомментировать в продакшне)
+    //if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+   // document.addEventListener('DOMContentLoaded', () => {
+    //    if (document.getElementById('loginForm')) {
+    //        setTimeout(() => {
+    //           const authManager = new AuthManager();
+    //            authManager.fillDemoCredentials();
+    //        }, 100);
+   //    }
+   // });
+
+   // }
 }
 
 // Инициализация менеджера авторизации

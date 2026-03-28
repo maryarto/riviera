@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товар - Riviera</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-spa"></i>
+                    <span>Riviera</span>
+                </a>
+
+                <!-- Поиск -->
+                <div class="search-container">
+                    <form id="searchForm" action="catalog.html" method="GET">
+                        <input type="text" id="searchInput" placeholder="Поиск товаров...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                        <div class="search-results" id="searchResults"></div>
+                    </form>
+                </div>
+
+                <!-- Навигация -->
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-store"></i> Каталог</a></li>
+                        <li><a href="catalog.html?category=skincare"><i class="fas fa-heart"></i> Уход</a></li>
+                        <li><a href="catalog.html?category=makeup"><i class="fas fa-palette"></i> Макияж</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Иконки пользователя и корзины -->
+                <div class="header-actions">
+                    <div class="user-menu">
+                        <a href="#" id="userIcon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info" id="userInfo">
+                                <p>Вы не авторизованы</p>
+                            </div>
+                            <a href="login.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                            <a href="register.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Регистрация</a>
+                            <a href="profile.html" class="dropdown-item" id="profileLink"><i class="fas fa-user-circle"></i> Профиль</a>
+                            <a href="#" class="dropdown-item" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        </div>
+                    </div>
+                    
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul class="breadcrumbs-list" id="breadcrumbs">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><span id="productCategory">Товар</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <section class="product-section">
+        <div class="container">
+            <!-- Загрузка -->
+            <div class="product-loading" id="productLoading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Загрузка товара...</p>
+            </div>
+
+            <!-- Контент товара -->
+            <div class="product-content" id="productContent" style="display: none;">
+                <div class="product-main">
+                    <!-- Галерея изображений -->
+                    <div class="product-gallery">
+                        <div class="product-main-image" id="productMainImage">
+                            <img id="mainProductImage" src="" alt="Product Image">
+                            <div class="product-badge" id="productBadge" style="display: none;"></div>
+                        </div>
+                        <div class="product-thumbnails" id="productThumbnails">
+                            <!-- Миниатюры будут загружены через JS -->
+                        </div>
+                    </div>
+
+                    <!-- Информация о товаре -->
+                    <div class="product-info">
+                        <div class="product-brand" id="productBrand">Бренд</div>
+                        <h1 class="product-title" id="productTitle">Название товара</h1>
+                        
+                        <div class="product-rating-section">
+                            <div class="product-rating" id="productRating">
+                                <div class="stars"></div>
+                                <span class="rating-value" id="ratingValue">0</span>
+                            </div>
+                            <a href="#reviews" class="reviews-link" id="reviewsLink">
+                                <span id="reviewsCount">0</span> отзывов
+                            </a>
+                        </div>
+
+                        <div class="product-price-section">
+                            <div class="product-price" id="productPrice">0 ₽</div>
+                            <div class="product-old-price" id="productOldPrice" style="display: none;"></div>
+                            <div class="product-discount" id="productDiscount" style="display: none;"></div>
+                        </div>
+
+                        <div class="product-availability" id="productAvailability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>В наличии</span>
+                        </div>
+
+                        <div class="product-description" id="productDescription">
+                            <h3>Описание</h3>
+                            <p></p>
+                        </div>
+
+                        <div class="product-attributes" id="productAttributes">
+                            <!-- Атрибуты товара -->
+                        </div>
+
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn decrease" id="decreaseQuantity">-</button>
+                                <input type="number" class="quantity-input" id="productQuantity" value="1" min="1" max="99">
+                                <button class="quantity-btn increase" id="increaseQuantity">+</button>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-large add-to-cart" id="addToCartBtn">
+                                <i class="fas fa-shopping-cart"></i>
+                                В корзину
+                            </button>
+                            
+                            <button class="btn btn-outline btn-icon favorite-btn" id="favoriteBtn">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+
+                        <div class="product-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-truck"></i>
+                                <span>Бесплатная доставка от 3000 ₽</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-undo"></i>
+                                <span>Возврат в течение 30 дней</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Гарантия качества</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Табы с дополнительной информацией -->
+                <div class="product-tabs">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="details">Характеристики</button>
+                        <button class="tab-btn" data-tab="ingredients">Состав</button>
+                        <button class="tab-btn" data-tab="howto">Применение</button>
+                        <button class="tab-btn" data-tab="reviews">Отзывы (<span id="tabReviewsCount">0</span>)</button>
+                    </div>
+                    
+                    <div class="tabs-content">
+                        <div class="tab-pane active" id="details">
+                            <div class="specs-table" id="specsTable">
+                                <!-- Характеристики будут загружены -->
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="ingredients">
+                            <div class="ingredients-list" id="ingredientsList">
+                                <!-- Состав будет загружен -->
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="howto">
+                            <div class="howto-content" id="howtoContent">
+                                <!-- Инструкция по применению -->
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="reviews">
+                            <div class="reviews-section">
+                                <div class="reviews-summary">
+                                    <div class="summary-rating">
+                                        <div class="average-rating" id="averageRating">0</div>
+                                        <div class="stars-big" id="averageStars"></div>
+                                        <div class="total-reviews" id="totalReviews">0 отзывов</div>
+                                    </div>
+                                    <div class="rating-distribution" id="ratingDistribution">
+                                        <!-- Распределение оценок -->
+                                    </div>
+                                </div>
+                                
+                                <div class="add-review">
+                                    <h3>Оставить отзыв</h3>
+                                    <div class="review-form" id="reviewForm">
+                                        <div class="rating-input">
+                                            <span>Ваша оценка:</span>
+                                            <div class="star-rating" id="starRating">
+                                                <i class="far fa-star" data-rating="1"></i>
+                                                <i class="far fa-star" data-rating="2"></i>
+                                                <i class="far fa-star" data-rating="3"></i>
+                                                <i class="far fa-star" data-rating="4"></i>
+                                                <i class="far fa-star" data-rating="5"></i>
+                                            </div>
+                                        </div>
+                                        <textarea id="reviewText" placeholder="Поделитесь впечатлениями о товаре..." rows="4"></textarea>
+                                        <button class="btn btn-primary" id="submitReviewBtn">Отправить отзыв</button>
+                                    </div>
+                                    <div class="login-message" id="reviewLoginMessage" style="display: none;">
+                                        <p>Чтобы оставить отзыв, <a href="login.html">войдите</a> в аккаунт</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="reviews-list" id="reviewsList">
+                                    <!-- Список отзывов -->
+                                </div>
+                                
+                                <div class="load-more" id="loadMoreReviews" style="display: none;">
+                                    <button class="btn btn-outline">Загрузить еще</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Похожие товары -->
+                <div class="similar-products">
+                    <h2>Похожие товары</h2>
+                    <div class="products-grid" id="similarProducts">
+                        <!-- Похожие товары будут загружены -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Товар не найден -->
+            <div class="product-not-found" id="productNotFound" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h2>Товар не найден</h2>
+                <p>К сожалению, запрашиваемый товар отсутствует в каталоге</p>
+                <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно успешного добавления -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Товар добавлен в корзину!</h2>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="continueShoppingBtn">Продолжить покупки</button>
+                <a href="cart.html" class="btn btn-primary">Перейти в корзину</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <i class="fas fa-spa"></i>
+                        <span>Lumière</span>
+                    </a>
+                    <p>Интернет-магазин натуральной косметики и средств для ухода</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Магазин</h3>
+                    <ul>
+                        <li><a href="catalog.html">Все товары</a></li>
+                        <li><a href="catalog.html?category=skincare">Уход за кожей</a></li>
+                        <li><a href="catalog.html?category=makeup">Макияж</a></li>
+                        <li><a href="catalog.html?category=haircare">Уход за волосами</a></li>
+                        <li><a href="catalog.html?category=fragrance">Парфюмерия</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@Riviera.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Голод Н улица Н</li>
+                    </ul>
+                    <div class="newsletter">
+                        <h4>Подписка на новости</h4>
+                        <form id="newsletterForm">
+                            <input type="email" placeholder="Ваш email" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Riviera. Все права защищены.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-mir"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение скриптов -->
+    <script src="js/main.js"></script>
+    <script src="js/product.js"></script>
+</body>
+</html>
